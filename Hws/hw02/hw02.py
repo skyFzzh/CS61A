@@ -32,6 +32,11 @@ def product(n, term):
     162
     """
     "*** YOUR CODE HERE ***"
+    ans =1
+    while(n>0):
+        ans *= term(n)
+        n -=1
+    return ans
 
 
 def accumulate(merger, start, n, term):
@@ -59,7 +64,10 @@ def accumulate(merger, start, n, term):
     16
     """
     "*** YOUR CODE HERE ***"
-
+    while(n>0):
+        start = merger(start,term(n))
+        n -=1
+    return start
 
 def summation_using_accumulate(n, term):
     """Returns the sum: term(1) + ... + term(n), using accumulate.
@@ -75,8 +83,7 @@ def summation_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(summation_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    "*** YOUR CODE HERE ***"
-
+    return accumulate(add,0,5,term)
 
 def product_using_accumulate(n, term):
     """Returns the product: term(1) * ... * term(n), using accumulate.
@@ -92,8 +99,7 @@ def product_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(product_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    "*** YOUR CODE HERE ***"
-
+    return accumulate(mul,1,n,term)
 
 def funception(func1, begin):
     """ Takes in a function (func1) and a begin value.
@@ -121,8 +127,14 @@ def funception(func1, begin):
     >>> g3(-1)   # increment(-3) * increment(-2) = -2 * -1 = 2
     2
     """
-    "*** YOUR CODE HERE ***"
-
+    def func2(end):
+        ans =1
+        a = begin
+        while (end > a):
+            ans *= func1(a)
+            a +=1
+        return ans
+    return func2
 
 def mul_by_num(num):
     """Returns a function that takes one argument and returns num
@@ -135,7 +147,7 @@ def mul_by_num(num):
     >>> y(-4)
     -8
     """
-    return ______
+    return lambda x: num*x
 
 
 def add_results(f1, f2):
@@ -158,7 +170,7 @@ def add_results(f1, f2):
     >>> a3(4)
     44
     """
-    return ______
+    return lambda x:f1(x)+f2(x)
 
 
 def mod_maker():
@@ -176,7 +188,7 @@ def mod_maker():
     >>> check(HW_SOURCE_FILE, 'mod_maker', ['If', 'IfExp']) # no if / if-else statements
     True
     """
-    return ______
+    return lambda x,y: x%y or True
 
 
 def lambda_math_syntax_check():
