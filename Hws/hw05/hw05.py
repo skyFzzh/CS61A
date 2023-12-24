@@ -9,6 +9,13 @@ def hailstone(n):
     1
     """
     "*** YOUR CODE HERE ***"
+    yield n
+    if n == 1:
+        yield from hailstone(n)
+    elif n % 2 == 0:
+        yield from hailstone(n // 2)
+    else:
+        yield from hailstone(n * 3 + 1)
 
 
 def merge(a, b):
@@ -24,8 +31,19 @@ def merge(a, b):
     [2, 3, 5, 7, 8, 9, 11, 13, 14, 15]
     """
     "*** YOUR CODE HERE ***"
-
-
+    first_a, first_b = next(a), next(b)
+    while(True):
+      if first_a< first_b:
+          yield first_a
+          first_a = next(a)
+      elif first_a == first_b:
+          yield first_a
+          first_a = next(a)
+          first_b = next(b)
+      else:
+          yield first_b
+          first_b = next(b)
+          
 def perms(seq):
     """Q3: Generates all permutations of the given sequence. Each permutation is a
     list of the elements in SEQ in a different order. The permutations may be
